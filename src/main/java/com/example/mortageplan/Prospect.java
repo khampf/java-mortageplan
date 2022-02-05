@@ -1,5 +1,7 @@
 package com.example.mortageplan;
 
+import java.util.List;
+
 public class Prospect {
 
     private String customerName;
@@ -16,6 +18,22 @@ public class Prospect {
 
     public Prospect(double loanTotal, double yearlyInterest, double paymentMonths) {
         this("Unkown", loanTotal, yearlyInterest, paymentMonths);
+    }
+
+    public Prospect(List<String> strings) throws InvalidInputException {
+        // [Customer, Total loan, Interest, Years]
+        if (strings.size() != 4) {
+            throw new InvalidInputException("Incorrect number of columns (must be 4)");
+        }
+        this.customerName = strings.get(0);
+
+        try {
+            this.loanTotal = Double.parseDouble(strings.get(1));
+            this.yearlyInterest = Double.parseDouble(strings.get(2)) / 100;
+            this.paymentMonths = Double.parseDouble(strings.get(3)) * 12;
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException("Incorrect number format in column");
+        }
     }
 
     public String getCustomerName() {
