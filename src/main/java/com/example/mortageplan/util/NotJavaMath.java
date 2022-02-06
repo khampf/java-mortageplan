@@ -1,4 +1,4 @@
-package com.example.mortageplan.libs;
+package com.example.mortageplan.util;
 
 public class NotJavaMath {
     public static double pow(double number, double power) {

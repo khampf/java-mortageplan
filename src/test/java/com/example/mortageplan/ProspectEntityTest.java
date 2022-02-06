@@ -1,18 +1,18 @@
 package com.example.mortageplan;
 
-import com.example.mortageplan.libs.NotJavaMath;
-import com.example.mortageplan.prospects.Prospect;
+import com.example.mortageplan.util.NotJavaMath;
+import com.example.mortageplan.entity.ProspectEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProspectTest {
-    Prospect p;
+class ProspectEntityTest {
+    ProspectEntity p;
 
     @BeforeEach
     void setUp() {
-        p = new Prospect(100.0, 0.10, 12);
+        p = new ProspectEntity(100.0, 0.10, 12);
     }
 
     // Testing getters and setters
@@ -76,7 +76,7 @@ class ProspectTest {
         assertEquals(200.38, NotJavaMath.round(p.getMonthlyPayment(), 2));
 
         // Using example from https://wiseloan.com/blog/how-to-calculate-monthly-payments-for-loans/
-        p = new Prospect(5000, .09, 3*12);
+        p = new ProspectEntity(5000, .09, 3*12);
         // assertEquals(158.50, p.getMonthlyPayment()); // THE EXAMPLE URL HAD ROUNDING ERRORS!
         assertEquals(158.9987, NotJavaMath.round(p.getMonthlyPayment(),4));
     }

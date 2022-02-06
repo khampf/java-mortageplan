@@ -1,4 +1,4 @@
-package com.example.mortageplan;
+package com.example.mortageplan.entity;
 
 public class InvalidInputException extends Exception {
 

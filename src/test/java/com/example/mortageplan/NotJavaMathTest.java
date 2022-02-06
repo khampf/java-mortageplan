@@ -1,6 +1,6 @@
 package com.example.mortageplan;
 
-import com.example.mortageplan.libs.NotJavaMath;
+import com.example.mortageplan.util.NotJavaMath;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

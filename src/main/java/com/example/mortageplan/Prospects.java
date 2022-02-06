@@ -1,8 +1,8 @@
-package com.example.mortageplan.prospects;
+package com.example.mortageplan;
 
-import com.example.mortageplan.InvalidInputException;
-import com.example.mortageplan.libs.CSV;
-import com.example.mortageplan.prospects.Prospect;
+import com.example.mortageplan.entity.InvalidInputException;
+import com.example.mortageplan.entity.ProspectEntity;
+import com.example.mortageplan.util.CSV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,18 +11,18 @@ import java.util.List;
 
 public class Prospects {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    List<Prospect> prospects  = new ArrayList<>();
+    List<ProspectEntity> prospectEntities = new ArrayList<>();
 
-    public Prospects(List<Prospect> prospects) {
-        this.prospects = prospects;
+    public Prospects(List<ProspectEntity> prospectEntities) {
+        this.prospectEntities = prospectEntities;
     }
 
     public Prospects(CSV csv) {
         int i=0;
         for (List<String> strings : csv.getStrings()) {
             try {
-                Prospect p = new Prospect(strings);
-                prospects.add(p);
+                ProspectEntity p = new ProspectEntity(strings);
+                prospectEntities.add(p);
             } catch (InvalidInputException e) {
                 if (i>0) {  // Skip first line header row error
                     logger.warn("Invalid CSV input: " + e.getMessage());
@@ -30,7 +30,7 @@ public class Prospects {
             }
             i++;
         }
-        this.prospects = prospects;
+        this.prospectEntities = prospectEntities;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Prospects {
         int i = 0;
         String out;
         out = "****************************************************************************************************\n\n";
-        for (Prospect p : prospects) {
+        for (ProspectEntity p : prospectEntities) {
             out += "Prospect " + ++i + ": " + p + "\n";
         }
         out += "\n****************************************************************************************************\n";

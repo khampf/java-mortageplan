@@ -1,14 +1,18 @@
 package com.example.mortageplan;
 
-import com.example.mortageplan.libs.CSV;
-import com.example.mortageplan.prospects.Prospects;
+import com.example.mortageplan.util.CSV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
+// @ComponentScan({"com.tutorialspoint.controller","com.tutorialspoint.service"})
+// @EntityScan("com.tutorialspoint.entity")
+@EnableJpaRepositories // ("com.tutorialspoint.repository")
 @SpringBootApplication
 public class MortagePlanApplication {
 	private static final Logger logger = LoggerFactory.getLogger(MortagePlanApplication.class);

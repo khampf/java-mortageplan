@@ -1,29 +1,48 @@
-package com.example.mortageplan.prospects;
+package com.example.mortageplan.entity;
 
-import com.example.mortageplan.InvalidInputException;
-import com.example.mortageplan.libs.NotJavaMath;
+import com.example.mortageplan.util.NotJavaMath;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 
-public class Prospect {
+@Entity
+@Table
+public class ProspectEntity {
+    @Id
+    @Column
+    private int id;
 
+    @Column
     private String customerName;
+
+    @Column
     private double loanTotal;
+
+    @Column
     private double yearlyInterest;
+
+    @Column
     private double paymentMonths;
 
-    public Prospect(String customerName, double loanTotal, double yearlyInterest, double paymentMonths) {
+    public ProspectEntity() {
+
+    }
+
+    public ProspectEntity(String customerName, double loanTotal, double yearlyInterest, double paymentMonths) {
         this.customerName = customerName;
         this.loanTotal = loanTotal;
         this.yearlyInterest = yearlyInterest;
         this.paymentMonths = paymentMonths;
     }
 
-    public Prospect(double loanTotal, double yearlyInterest, double paymentMonths) {
+    public ProspectEntity(double loanTotal, double yearlyInterest, double paymentMonths) {
         this("Unkown", loanTotal, yearlyInterest, paymentMonths);
     }
 
-    public Prospect(List<String> strings) throws InvalidInputException {
+    public ProspectEntity(List<String> strings) throws InvalidInputException {
         // [Customer, Total loan, Interest, Years]
         if (strings.size() != 4) {
             throw new InvalidInputException("Incorrect number of columns (must be 4) in " + strings);
