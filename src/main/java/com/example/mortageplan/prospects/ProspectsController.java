@@ -1,4 +1,4 @@
-package com.example.mortageplan;
+package com.example.mortageplan.prospects;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

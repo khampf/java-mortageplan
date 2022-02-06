@@ -1,12 +1,12 @@
 package com.example.mortageplan;
 
+import com.example.mortageplan.libs.CSV;
+import com.example.mortageplan.prospects.Prospects;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class MortagePlanApplication {

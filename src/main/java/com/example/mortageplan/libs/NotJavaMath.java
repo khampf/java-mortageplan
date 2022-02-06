@@ -1,7 +1,7 @@
-package com.example.mortageplan;
+package com.example.mortageplan.libs;
 
 public class NotJavaMath {
-    static double pow(double number, double power) {
+    public static double pow(double number, double power) {
         if (power == 1) {
             return number;
         } else {
@@ -9,13 +9,13 @@ public class NotJavaMath {
         }
     }
 
-    static double round(double number) {
+    public static double round(double number) {
         int integer = (int) number;
         double fraction = number - integer;
         return (fraction > 0.5 ? integer+1 : integer);
     }
 
-    static double round(double number, int decimals) {
+    public static double round(double number, int decimals) {
         return round((number * pow(10,decimals))) / pow(10,decimals);
     }
 }

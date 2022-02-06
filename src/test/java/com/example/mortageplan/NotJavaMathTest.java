@@ -1,22 +1,22 @@
 package com.example.mortageplan;
 
+import com.example.mortageplan.libs.NotJavaMath;
 import org.junit.jupiter.api.Test;
 
-import static com.example.mortageplan.NotJavaMath.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NotJavaMathTest {
 
     @Test
     void testPow() {
-        assertEquals(1, pow(1, 1));
-        assertEquals(4, pow(2, 2));
-        assertEquals(10, pow(10, 1));
-        assertEquals(100, pow(10, 2));
-        assertEquals(1000, pow(10, 3));
-        assertEquals(10000, pow(10, 4));
-        assertEquals(100000, pow(10, 5));
-        assertEquals(1000000, pow(10, 6));
+        assertEquals(1, NotJavaMath.pow(1, 1));
+        assertEquals(4, NotJavaMath.pow(2, 2));
+        assertEquals(10, NotJavaMath.pow(10, 1));
+        assertEquals(100, NotJavaMath.pow(10, 2));
+        assertEquals(1000, NotJavaMath.pow(10, 3));
+        assertEquals(10000, NotJavaMath.pow(10, 4));
+        assertEquals(100000, NotJavaMath.pow(10, 5));
+        assertEquals(1000000, NotJavaMath.pow(10, 6));
     }
 
     @Test

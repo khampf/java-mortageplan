@@ -1,4 +1,4 @@
-package com.example.mortageplan;
+package com.example.mortageplan.libs;
 
 import java.io.*;
 import java.util.ArrayList;

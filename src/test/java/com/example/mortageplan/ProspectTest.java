@@ -1,5 +1,7 @@
 package com.example.mortageplan;
 
+import com.example.mortageplan.libs.NotJavaMath;
+import com.example.mortageplan.prospects.Prospect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

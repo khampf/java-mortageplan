@@ -1,4 +1,7 @@
-package com.example.mortageplan;
+package com.example.mortageplan.prospects;
+
+import com.example.mortageplan.InvalidInputException;
+import com.example.mortageplan.libs.NotJavaMath;
 
 import java.util.List;
 

@@ -1,4 +1,8 @@
-package com.example.mortageplan;
+package com.example.mortageplan.prospects;
+
+import com.example.mortageplan.InvalidInputException;
+import com.example.mortageplan.libs.CSV;
+import com.example.mortageplan.prospects.Prospect;
 
 import java.util.ArrayList;
 import java.util.List;
