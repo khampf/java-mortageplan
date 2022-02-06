@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CSVTest {
-    Resource prospectsFile = new ClassPathResource("static/prospects.txt");
+    Resource prospectsFile = new ClassPathResource("prospects.txt");
 
     @Test
     void testFileExists() {
