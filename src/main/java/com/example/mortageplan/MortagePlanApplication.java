@@ -20,24 +20,8 @@ public class MortagePlanApplication {
 			} else {
 				System.out.println("Loading " + fileName + " in console session.");
 				CSV csv = new CSV(inputFile);
-				// System.out.println(csv);
-
-				List<Prospect> prospects = new ArrayList<>();
-				for (List<String> strings : csv.getStrings()) {
-					try {
-						Prospect p = new Prospect(strings);
-						prospects.add(p);
-					} catch (InvalidInputException e) {
-						e.printStackTrace();
-					}
-				}
-
-				int i=0;
-				for (Prospect p : prospects) {
-					System.out.println("****************************************************************************************************\n");
-					System.out.println("Prospect " + ++i + ": " + p);
-					System.out.println("\n****************************************************************************************************");
-				}
+				Prospects prospects = new Prospects(csv);
+				System.out.println(prospects);
 			}
 		} else {
 			SpringApplication.run(MortagePlanApplication.class, args);

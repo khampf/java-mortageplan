@@ -56,7 +56,7 @@ public class CSV {
                 }
             }
             if (lineStrings.isEmpty()) {
-                // System.err.println("WARNING: Malformed CSV (empty line)");
+                System.err.println("WARNING: Malformed CSV (empty line)");
             } else {
                 strings.add(lineStrings);
             }

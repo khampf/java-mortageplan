@@ -23,16 +23,26 @@ public class Prospect {
     public Prospect(List<String> strings) throws InvalidInputException {
         // [Customer, Total loan, Interest, Years]
         if (strings.size() != 4) {
-            throw new InvalidInputException("Incorrect number of columns (must be 4)");
+            throw new InvalidInputException("Incorrect number of columns (must be 4) in " + strings);
         }
         this.customerName = strings.get(0);
 
         try {
             this.loanTotal = Double.parseDouble(strings.get(1));
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException("Incorrect number format in column 1: " + strings.get(1));
+        }
+
+        try {
             this.yearlyInterest = Double.parseDouble(strings.get(2)) / 100;
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException("Incorrect number format in column 2: " + strings.get(2));
+        }
+
+        try {
             this.paymentMonths = Double.parseDouble(strings.get(3)) * 12;
         } catch (NumberFormatException e) {
-            throw new InvalidInputException("Incorrect number format in column");
+            throw new InvalidInputException("Incorrect number format in column 3: " + strings.get(3));
         }
     }
 
