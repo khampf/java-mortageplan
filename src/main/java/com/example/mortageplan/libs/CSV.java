@@ -1,11 +1,15 @@
 package com.example.mortageplan.libs;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CSV {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static char defaultDelimiter = ',';
     private char delimiter = defaultDelimiter;
     List<List<String>> strings = new ArrayList<>();
@@ -31,6 +35,16 @@ public class CSV {
         this(inputString, defaultDelimiter);
     }
 
+    public CSV(InputStream inputStream, char delimiter) {
+        this.delimiter = delimiter;
+        Scanner scanner = new Scanner(inputStream, "UTF-8");
+        CSVParse(scanner);
+    }
+
+    public CSV(InputStream inputStream) {
+        this(inputStream, defaultDelimiter);
+    }
+
     public void CSVParse(Scanner scanner) {
         int i = 0;
         while (scanner.hasNextLine()) {
@@ -46,7 +60,7 @@ public class CSV {
                         s = s + " " + lineScanner.next();
                     }
                     if (!s.endsWith("\"")) {
-                        System.err.println("WARNING: Malformed CSV (unterminated quotes)");
+                        logger.warn("Malformed CSV (unterminated quotes)");
                     } else {
                         s = s.substring(1, s.length() - 1).trim();
                     }
@@ -56,7 +70,7 @@ public class CSV {
                 }
             }
             if (lineStrings.isEmpty()) {
-                System.err.println("WARNING: Malformed CSV (empty line)");
+                logger.warn("Malformed CSV (empty line)");
             } else {
                 strings.add(lineStrings);
             }

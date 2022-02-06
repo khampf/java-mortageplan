@@ -3,11 +3,14 @@ package com.example.mortageplan.prospects;
 import com.example.mortageplan.InvalidInputException;
 import com.example.mortageplan.libs.CSV;
 import com.example.mortageplan.prospects.Prospect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Prospects {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     List<Prospect> prospects  = new ArrayList<>();
 
     public Prospects(List<Prospect> prospects) {
@@ -21,8 +24,8 @@ public class Prospects {
                 Prospect p = new Prospect(strings);
                 prospects.add(p);
             } catch (InvalidInputException e) {
-                if (i>0) {  // Omit header row error
-                    System.err.println("WARNING: Invalid CSV input: " + e);
+                if (i>0) {  // Skip first line header row error
+                    logger.warn("Invalid CSV input: " + e.getMessage());
                 }
             }
             i++;

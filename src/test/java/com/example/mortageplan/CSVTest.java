@@ -6,6 +6,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +25,12 @@ class CSVTest {
         assertEquals("[Customer, Total loan, Interest, Years]", csv.getStrings().get(0).toString());
     }
 
+    @Test
+    void testInputStreamConstructor() throws IOException {
+        InputStream inputStream = prospectsFile.getInputStream();
+        CSV csv = new CSV(inputStream);
+        assertEquals("[Customer, Total loan, Interest, Years]", csv.getStrings().get(0).toString());
+    }
     @Test
     void testStringConstructor() throws IOException {
         String inputString = Files.readString(prospectsFile.getFile().toPath());
