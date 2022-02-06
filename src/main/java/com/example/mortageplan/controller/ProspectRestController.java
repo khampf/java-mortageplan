@@ -1,4 +1,4 @@
-package com.example.mortageplan.prospects;
+package com.example.mortageplan.controller;
 
 import com.example.mortageplan.entity.ProspectEntity;
 import com.example.mortageplan.service.ProspectServiceImpl;
