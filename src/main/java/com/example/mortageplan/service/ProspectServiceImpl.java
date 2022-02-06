@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProspectServiceImpl {
+public class ProspectServiceImpl implements ProspectService {
     @Autowired
     ProspectRepository repository;
 

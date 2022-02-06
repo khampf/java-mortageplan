@@ -1,7 +1,7 @@
 package com.example.mortageplan.controller;
 
 import com.example.mortageplan.entity.ProspectEntity;
-import com.example.mortageplan.service.ProspectServiceImpl;
+import com.example.mortageplan.service.ProspectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,26 +11,26 @@ import java.util.List;
 @RequestMapping(path = "/rest")
 public class ProspectRestController {
     @Autowired
-    ProspectServiceImpl prospectServiceImpl;
+    ProspectService prospectService;
 
     @GetMapping("/Prospects")
     public List<ProspectEntity> getAllProspects(){
-        return prospectServiceImpl.getAllProspects();
+        return prospectService.getAllProspects();
     }
     @GetMapping("/Prospect/{id}")
     public ProspectEntity getProspect(@PathVariable("id") int id) {
-        return prospectServiceImpl.getProspectById(id);
+        return prospectService.getProspectById(id);
     }
     @DeleteMapping("/Prospect/{id}")
     public void deleteProspect(@PathVariable("id") int id) {
-        prospectServiceImpl.deleteProspectById(id);
+        prospectService.deleteProspectById(id);
     }
     @PostMapping("/Prospect")
     public void addProspect(@RequestBody ProspectEntity Prospect) {
-        prospectServiceImpl.saveOrUpdateProspect(Prospect);
+        prospectService.saveOrUpdateProspect(Prospect);
     }
     @PutMapping("/Prospect")
     public void updateProspect(@RequestBody ProspectEntity Prospect) {
-        prospectServiceImpl.saveOrUpdateProspect(Prospect);
+        prospectService.saveOrUpdateProspect(Prospect);
     }
 }

@@ -2,16 +2,14 @@ package com.example.mortageplan.entity;
 
 import com.example.mortageplan.util.NotJavaMath;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table
 public class ProspectEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private int id;
 
@@ -103,8 +101,14 @@ public class ProspectEntity {
     public double getPaymentMonths() {
         return paymentMonths;
     }
+    public double getPaymentYears() {
+        return paymentMonths / 12;
+    }
     public void setPaymentMonths(double paymentMonths) {
         this.paymentMonths = paymentMonths;
+    }
+    public void setPaymentYears(double paymentYears) {
+        this.paymentMonths = paymentYears * 12;
     }
 
     /**********************************************************************
@@ -127,7 +131,7 @@ public class ProspectEntity {
 
     @Override
     public String toString() {
-        double paymentYears = paymentMonths / 12;
+        double paymentYears = getPaymentYears();
         String paymentYearsString =
                 (paymentMonths % 12 == 0 ? Integer.toString((int) paymentYears) : Double.toString(paymentYears));
         return customerName + " wants to borrow " + loanTotal + " € for a period of " + paymentYearsString

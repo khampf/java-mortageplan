@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<div th:if="${message}" class="message">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <h1>Mortage Plan Prospects</h1>
+    <hr/>
+    <h2>Prospects:</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Customer Name</th>
+            <th>Loan Total</th>
+            <th>Yearly Interest</th>
+            <th>Payment Years</th>
+            <th>Monthly Payment</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${prospects}" th:field="${p}">
+                <td th:text="${pStat.index+1}" class="right"></td>
+                <td th:text="${p.getCustomerName()}"></td>
+                <td th:text="${#numbers.formatDecimal(p.getLoanTotal(),1,2,'COMMA')}" class="right"></td>
+                <td th:text="${p.getYearlyInterest()}" class="right"></td>
+                <td th:text="${p.getPaymentYears()}" class="right"></td>
+                <td th:text="${#numbers.formatDecimal(p.getMonthlyPayment(),1,2,'COMMA')}" class="right"></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <h2>Read from file</h2>
+    <form method="POST" enctype="multipart/form-data" action="/">
+        <table>
+            <tr>
+                <td>File to upload:</td>
+                <td><input type="file" name="file"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Upload"/></td>
+            </tr>
+        </table>
+    </form>
+    <hr/>
+</div>
+
+<div>
+    <ul>
+        <li th:each="file : ${files}">
+            <a th:href="${file}" th:text="${file}"/>
+        </li>
+    </ul>
+</div>
+
+</body>
