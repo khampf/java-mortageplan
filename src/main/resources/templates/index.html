@@ -5,7 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
-
+<body>
 <div th:if="${message}" class="message">
     <h2 th:text="${message}"/>
 </div>
@@ -26,16 +26,41 @@
         </tr>
         </thead>
         <tbody>
-            <tr th:each="p : ${prospects}" th:field="${p}">
-                <td th:text="${pStat.index+1}" class="right"></td>
-                <td th:text="${p.getCustomerName()}"></td>
-                <td th:text="${#numbers.formatDecimal(p.getLoanTotal(),1,2,'COMMA')}" class="right"></td>
-                <td th:text="${p.getYearlyInterest()}" class="right"></td>
-                <td th:text="${p.getPaymentYears()}" class="right"></td>
-                <td th:text="${#numbers.formatDecimal(p.getMonthlyPayment(),1,2,'COMMA')}" class="right"></td>
-            </tr>
+        <tr th:each="p : ${prospects}" th:field="${p}">
+            <td th:text="${pStat.index+1}" class="right"></td>
+            <td th:text="${p.getCustomerName()}"></td>
+            <td th:text="${#numbers.formatDecimal(p.getLoanTotal(),1,'POINT',2,'COMMA')}" class="right"></td>
+            <td th:text="${#numbers.formatPercent(p.getYearlyDecimalInterest(),1,2)}" class="right"></td>
+            <td th:text="${p.getTermYears()}" class="right"></td>
+            <td th:text="${#numbers.formatDecimal(p.getMonthlyPayment(),1,'POINT',2,'COMMA')}" class="right"></td>
+        </tr>
         </tbody>
     </table>
+    <hr/>
+    <h2>Enter new prospect</h2>
+    <form th:action="@{/add}" th:object="${prospect}" method="post" class="form">
+        <div class="form-group">
+            <label for="customerName">Name</label>
+            <input class="form-control" type="text" th:field="*{customerName}" id="customerName" placeholder="Customer Name">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"></div>
+        </div>
+        <div class="form-group">
+            <label for="loanTotal">Loan Total</label>
+            <input class="form-control" type="number" th:field="*{loanTotal}" id="loanTotal" placeholder="0">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('loanTotal')}" th:errors="*{loanTotal}"></div>
+        </div>
+        <div class="form-group">
+            <label for="yearlyInterest">Yearly Interest</label>
+            <input class="form-control" type="number" th:field="*{yearlyInterest}" id="yearlyInterest" placeholder="0">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('yearlyInterest')}" th:errors="*{yearlyInterest}"></div>
+        </div>
+        <div class="form-group">
+            <label for="termYears">Term Years</label>
+            <input class="form-control" type="number" th:field="*{termYears}" id="termYears" placeholder="0">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('termYears')}" th:errors="*{termYears}"></div>
+        </div>
+        <input type="submit"  class="btn btn-success" value="Add Prospect">
+    </form>
     <hr/>
     <h2>Read from file</h2>
     <form method="POST" enctype="multipart/form-data" action="/">
@@ -52,13 +77,4 @@
     </form>
     <hr/>
 </div>
-
-<div>
-    <ul>
-        <li th:each="file : ${files}">
-            <a th:href="${file}" th:text="${file}"/>
-        </li>
-    </ul>
-</div>
-
 </body>

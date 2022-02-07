@@ -1,8 +1,14 @@
 package com.example.mortageplan.util;
 
+import java.util.InputMismatchException;
+
 public class NotJavaMath {
     public static double pow(double number, double power) {
-        if (power == 1) {
+        if (power < 0) {
+            throw new InputMismatchException("Can not handle inversions");
+        } else if (power == 0) {
+            return 1;
+        } else if (power == 1) {
             return number;
         } else {
             return number * pow(number, power-1);
