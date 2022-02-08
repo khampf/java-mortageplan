@@ -1,3 +1,8 @@
+body {
+    font-family: Sans-Serif;
+    margin-left: 1em;
+}
+
 title {
     color: darkgreen;
 }
@@ -10,7 +15,7 @@ table {
     border: 1px solid gray;
 }
 
-table tr:nth-child(even) {
+table.prospects tr:nth-child(even) {
     background-color: lightgray;
 }
 
@@ -24,4 +29,42 @@ td {
 
 .right {
     text-align: right;
+}
+
+form {
+    float: left;
+}
+
+.form-group {
+    padding: 0.2em;
+    float: left;
+}
+
+h3, fieldset {
+    clear: both;
+}
+
+fieldset {
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.alert {
+    color: darkred;
+    font-size: 0.7em;
+}
+
+input, label {
+    display:block;
+}
+
+label {
+    font-variant: all-small-caps;
+}
+
+table, fieldset {
+    width: 768px;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }

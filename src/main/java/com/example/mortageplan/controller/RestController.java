@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = "/rest")
-public class ProspectRestController {
+public class RestController {
     @Autowired
     ProspectService prospectService;
 

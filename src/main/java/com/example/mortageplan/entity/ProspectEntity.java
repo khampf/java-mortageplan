@@ -14,20 +14,19 @@ public class ProspectEntity {
     private int id;
 
     @Column
-    @NotEmpty(message = "Name can not be null")
-    @NotBlank(message = "Name can not be blank")
+    @NotBlank // (message = "Can not be blank")
     private String customerName;
 
     @Column
-    @Min(value = 1, message = "Loan total error")
+    @Min(value = 1) //, message = "Required")
     private double loanTotal;
 
     @Column
-    // TODO min
+    @Min(value = 0)
     private double yearlyInterest;
 
     @Column
-    // TODO min
+    @Positive
     private double termYears;
 
     public ProspectEntity() {
@@ -69,6 +68,10 @@ public class ProspectEntity {
         } catch (NumberFormatException e) {
             throw new InvalidInputException("Incorrect number format in column 3: " + strings.get(3));
         }
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCustomerName() {
