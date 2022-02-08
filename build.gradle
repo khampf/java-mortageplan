@@ -40,3 +40,29 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks {
+	bootWar {
+		archiveFileName.set("mortageplan.war")
+	}
+}
+
+task runExecutableWar(type: JavaExec) {
+	dependsOn bootWar
+	group = "Execution"
+	description = "Run the output executable war with provided prospects.txt"
+	classpath = files(bootWar.archiveFile.get())
+	args 'prospects.txt'
+}
+
+task runExecutableWarTomcat(type: JavaExec) {
+	dependsOn bootWar
+	group = "Execution"
+	description = "Run the output executable war as a webapp in Tomcat"
+	classpath = files(bootWar.archiveFile.get())
+}
+
+task runDocker(type: Exec) {
+	dependsOn bootWar
+	// TODO: copy out WAR as Dockerfile source, now it uses hardcoded defaults
+	commandLine "docker", "run", "-p", "8080:8080","--name", "mortageplan_tomcat", "tomcat"
+}

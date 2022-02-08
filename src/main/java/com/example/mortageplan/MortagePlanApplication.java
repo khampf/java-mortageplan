@@ -51,7 +51,6 @@ public class MortagePlanApplication extends SpringBootServletInitializer {
     }
 }
 
-// TODO clear button
-// TODO manual input form?
 // TODO cleanup
 // TODO README file
+// TODO JavaDoc?
