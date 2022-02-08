@@ -10,22 +10,27 @@
     <h3 th:text="${message}"/>
 </div>
 
-<div>
-    <h1>Mortage Plan Prospects</h1>
-    <a href="rest/Prospects">REST API endpoint</a>
+<div class="titlediv">
+    <h1>Mortage Plans</h1>
+    <ul>
+        <li>Prospects <a href="rest/Prospects">REST API endpoint</a></li>
+    </ul>
 </div>
-<div th:unless="${#lists.isEmpty(prospects)}">
+
+<hr/>
+
+<div th:unless="${#lists.isEmpty(prospects)}" class="tablediv">
     <h3>Prospects</h3>
     <table class="prospects">
         <thead>
         <tr>
             <th>Id</th>
             <th>Customer Name</th>
-            <th>Loan Total</th>
-            <th>Yearly Interest</th>
-            <th>Payment Years</th>
-            <th>Monthly Payment</th>
-            <th>Delete</th>
+            <th>Loan</th>
+            <th>Interest</th>
+            <th>Years</th>
+            <th>Monthly</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -40,46 +45,64 @@
         </tr>
         </tbody>
     </table>
-</div><div>
+</div>
+
+<div>
     <form th:action="@{/}" th:object="${prospect}" method="post">
         <fieldset>
             <legend>Enter new prospect</legend>
             <div class="form-group">
-                <label for="customerName">Name</label>
-                <input class="form-control" type="text" th:field="*{customerName}" id="customerName" placeholder="Customer Name">
-                <div class="alert alert-warning" th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"></div>
+                <label for="customerName">Customer Name</label>
+                <input class="form-control" type="text" th:field="*{customerName}" id="customerName"
+                       placeholder="Customer Name">
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('customerName')}"
+                     th:errors="*{customerName}"></div>
             </div>
             <div class="form-group">
                 <label for="loanTotal">Loan Total</label>
                 <input class="form-control" type="text" th:field="*{loanTotal}" id="loanTotal" placeholder="0">
-                <div class="alert alert-warning" th:if="${#fields.hasErrors('loanTotal')}" th:errors="*{loanTotal}"></div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('loanTotal')}"
+                     th:errors="*{loanTotal}"></div>
             </div>
             <div class="form-group">
                 <label for="yearlyInterest">Yearly Interest</label>
-                <input class="form-control" type="text" th:field="*{yearlyInterest}" id="yearlyInterest" placeholder="0">
-                <div class="alert alert-warning" th:if="${#fields.hasErrors('yearlyInterest')}" th:errors="*{yearlyInterest}"></div>
+                <input class="form-control" type="text" th:field="*{yearlyInterest}" id="yearlyInterest"
+                       placeholder="0">
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('yearlyInterest')}"
+                     th:errors="*{yearlyInterest}"></div>
             </div>
             <div class="form-group">
                 <label for="termYears">Years</label>
                 <input class="form-control" type="text" th:field="*{termYears}" id="termYears" placeholder="Years">
-                <div class="alert alert-warning" th:if="${#fields.hasErrors('termYears')}" th:errors="*{termYears}"></div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('termYears')}"
+                     th:errors="*{termYears}"></div>
             </div>
             <div class="form-group">
                 <label for="submitForm">&nbsp;</label>
-                <input type="submit"  class="btn btn-success" value="Add" id="submitForm">
+                <input type="submit" class="btn btn-success" value="Add" id="submitForm">
             </div>
         </fieldset>
     </form>
-</div><div>
-    <form method="POST" enctype="multipart/form-data" action="/upload">
-        <fieldset>
-            <legend>Read from file</legend>
+</div>
+
+<div>
+    <fieldset>
+        <legend>Read from file</legend>
+        <form action="/demo">
             <div class="form-group">
-                <label for="file">File to upload:</label>
+                <label for="populateButton">Populate DB</label>
+                <button type="submit" id="populateButton">projects.txt</button>
+                <p class="subtext">internal resource</p>
+            </div>
+        </form>
+        <div class="spacer"></div>
+        <form method="POST" enctype="multipart/form-data" action="/upload">
+            <div class="form-group">
+                <label for="file">External file upload</label>
                 <input type="file" name="file" id="file"/>
                 <input type="submit" value="Upload"/>
             </div>
-        </fieldset>
-    </form>
+        </form>
+    </fieldset>
 </div>
 </body>

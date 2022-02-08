@@ -2,8 +2,6 @@ package com.example.mortageplan.controller;
 
 import com.example.mortageplan.entity.ProspectEntity;
 import com.example.mortageplan.service.ProspectService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,18 +17,23 @@ public class ProspectsController {
     @Autowired
     ProspectService prospectService;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    // private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping({"/"})
-    public String webpage(Model model, ProspectEntity prospect) {
+    public String commonContent(Model model, ProspectEntity prospect) {
         List<ProspectEntity> prospects = prospectService.getAllProspects();
         model.addAttribute("prospects", prospects);
         model.addAttribute("prospect", prospect);
         return "index";
     }
 
+    @GetMapping({"/"})
+    public String webpage(Model model, ProspectEntity prospect) {
+        return commonContent(model, prospect);
+    }
+
     @PostMapping("/")
     public String addProspect(@Valid @ModelAttribute("prospect") ProspectEntity prospect, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        // TODO test if bindings result can use commonContent
         if (result.hasErrors()) {
             List<ProspectEntity> prospects = prospectService.getAllProspects();
             model.addAttribute("prospects", prospects);

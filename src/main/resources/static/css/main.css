@@ -13,6 +13,8 @@ title {
 
 table {
     border: 1px solid gray;
+    padding: 1em;
+    width: 100%;
 }
 
 table.prospects tr:nth-child(even) {
@@ -31,11 +33,11 @@ td {
     text-align: right;
 }
 
-form {
+/*form {
     float: left;
-}
+}*/
 
-.form-group {
+.form-group, .spacer {
     padding: 0.2em;
     float: left;
 }
@@ -44,27 +46,34 @@ h3, fieldset {
     clear: both;
 }
 
-fieldset {
+table, fieldset {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
 }
 
+.alert, .subtext {
+    font-size: 0.7em;
+}
+
 .alert {
     color: darkred;
-    font-size: 0.7em;
+}
+
+.spacer {
+    margin-left: 4em;
 }
 
 input, label {
     display:block;
 }
 
-label {
+label, th {
     font-variant: all-small-caps;
 }
 
-table, fieldset {
-    width: 768px;
-    margin-top: 2em;
-    margin-bottom: 2em;
+table, fieldset, hr, .titlediv, .tablediv {
+    width: 800px;
+    margin: 2em auto;
 }
+
