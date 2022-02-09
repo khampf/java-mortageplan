@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${message}"></title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
+<div class="errordiv">
+    <h1>Error code <span th:text="${status}"></span></h1>
+    <h3 th:text="${message}"></h3>
+    <p>Click here to return to <a href="/">top level page</a></p>
+</div>
+
+<div th:unless="${#strings.isEmpty(exception)}" class="errordiv">
+    <h3>Exception</h3>
+    <p th:text="${exception}"></p>
+</div>
+
+<div th:unless="${#strings.isEmpty(trace)}" class="errordiv">
+    <h3>Stacktrace</h3>
+    <pre th:text="${trace}"></pre>
+</div>
+
+<div th:unless="${#strings.isEmpty(errors)}" class="errordiv">
+    <h3>Binding Errors</h3>
+    <p th:text="${errors}"></p>
+</div>
+
+</body>
+</html>
