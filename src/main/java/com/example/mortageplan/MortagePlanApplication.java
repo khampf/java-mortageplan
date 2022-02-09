@@ -62,7 +62,7 @@ public class MortagePlanApplication extends SpringBootServletInitializer {
             for (List<String> strings : csv.getStrings()) {
                 try {
                     ProspectEntity prospectEntity = new ProspectEntity(strings);
-                    output.append("Prospect ").append(++i).append(": ").append(prospectEntity).append("\n");
+                    output.append("Prospect ").append(i).append(": ").append(prospectEntity).append("\n");
                 } catch (InvalidInputException e) {
                     if (i > 0) {  // Skip first line header row error
                         logger.warn("Invalid CSV input: " + e.getMessage());

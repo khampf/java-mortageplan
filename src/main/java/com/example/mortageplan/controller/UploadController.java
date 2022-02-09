@@ -6,7 +6,6 @@ import com.example.mortageplan.service.ProspectService;
 import com.example.mortageplan.util.CSV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -17,23 +16,33 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+/**
+ * Controller for receiving manually uploaded CSV input
+ */
 @Controller
 public class UploadController {
-    @Autowired
-    ProspectService prospectService;
-
+    final ProspectService prospectService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * Constructor to avoid @Autowired
+     *
+     * @param prospectService JPA entity service
+     */
+    public UploadController(ProspectService prospectService) {
+        this.prospectService = prospectService;
+    }
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
         try {
-            CSV csv = new CSV(file.getInputStream());
-            prospectsFromCSV(csv);
+            int addedCount = prospectsFromCSV(file.getInputStream());
             redirectAttributes.addFlashAttribute("message",
-                    "Uploaded file " + file.getOriginalFilename() + " processed");
+                    "Read " + addedCount + " prospects from uploaded file " + file.getOriginalFilename());
         } catch (IOException e) {
             // e.printStackTrace();
             redirectAttributes.addFlashAttribute("message",
@@ -46,10 +55,9 @@ public class UploadController {
     public String demo(RedirectAttributes redirectAttributes) {
         Resource prospectsFile = new ClassPathResource("prospects.txt");
         try {
-            CSV csv = new CSV(prospectsFile.getInputStream());
-            prospectsFromCSV(csv);
+            int addedCount = prospectsFromCSV(prospectsFile.getInputStream());
             redirectAttributes.addFlashAttribute("message",
-                    "File " + prospectsFile.getFilename() + " processed");
+                    "Read " + addedCount + " prospects from file " + prospectsFile.getFilename());
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute("message",
                     "Error loading file " + prospectsFile.getFilename() + "!");
@@ -57,12 +65,20 @@ public class UploadController {
         return "redirect:/";
     }
 
-    public void prospectsFromCSV(CSV csv) {
+    /**
+     * Add prospect entities from CSV content
+     *
+     * @param inputStream InputStream source for CSV containing prospects
+     */
+    private int prospectsFromCSV(InputStream inputStream) {
+        CSV csv = new CSV(inputStream);
         int i = 0;
+        int addedCount = 0;
         for (List<String> strings : csv.getStrings()) {
             try {
                 ProspectEntity prospectEntity = new ProspectEntity(strings);
                 prospectService.saveOrUpdateProspect(prospectEntity);
+                addedCount++;
             } catch (InvalidInputException e) {
                 if (i > 0) {  // Skip first line header row error
                     logger.warn("Invalid CSV input: " + e.getMessage());
@@ -70,5 +86,6 @@ public class UploadController {
             }
             i++;
         }
+        return addedCount;
     }
 }

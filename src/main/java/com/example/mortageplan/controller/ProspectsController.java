@@ -11,6 +11,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Default controller for Web Application content
+ */
 @Controller
 public class ProspectsController {
     final
@@ -36,7 +39,6 @@ public class ProspectsController {
         if (result.hasErrors()) {
             List<ProspectEntity> prospects = prospectService.getAllProspects();
             model.addAttribute("prospects", prospects);
-            // model.addAttribute("prospect", prospect);
             model.addAttribute("message",
                     "Unable to add prospect using form input data");
             return "index";

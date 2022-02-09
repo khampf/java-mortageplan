@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller for REST endpoints
+ */
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = "/rest")
 public class RestController {
@@ -13,6 +16,7 @@ public class RestController {
 
     /**
      * Constructor to avoid @Autowired
+     *
      * @param prospectService JPA Service
      */
     public RestController(ProspectService prospectService) {
@@ -21,15 +25,17 @@ public class RestController {
 
     /**
      * Returns a list of all Prospect entities
+     *
      * @return ProspectEntity
      */
     @GetMapping("/Prospects")
-    public List<ProspectEntity> getAllProspects(){
+    public List<ProspectEntity> getAllProspects() {
         return prospectService.getAllProspects();
     }
 
     /**
      * Returns Prospect entity specified by id
+     *
      * @param id Entity id
      * @return ProspectEntity
      */
@@ -40,6 +46,7 @@ public class RestController {
 
     /**
      * Deletes Prospect entity specified by id
+     *
      * @param id Entity id
      */
     @DeleteMapping("/Prospect/{id}")
@@ -49,6 +56,7 @@ public class RestController {
 
     /**
      * Adds Prospect entity
+     *
      * @param Prospect Prospect entity
      */
     @PostMapping("/Prospect")
@@ -58,6 +66,7 @@ public class RestController {
 
     /**
      * Updates Prospect entity
+     *
      * @param Prospect Prospect entity
      */
     @PutMapping("/Prospect")
