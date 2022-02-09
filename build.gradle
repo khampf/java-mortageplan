@@ -1,11 +1,11 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.3'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'com.palantir.docker' version '0.32.0'
-	id 'com.palantir.docker-run' version '0.32.0'
-	id 'com.palantir.docker-compose' version '0.32.0'
-	id 'java'
-	id 'war'
+    id 'org.springframework.boot' version '2.6.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.palantir.docker' version '0.32.0'
+    id 'com.palantir.docker-run' version '0.32.0'
+    id 'com.palantir.docker-compose' version '0.32.0'
+    id 'java'
+    id 'war'
 }
 
 group = 'com.example'
@@ -13,111 +13,110 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.h2database:h2'
-	implementation 'org.hibernate:hibernate-core'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.h2database:h2'
+    implementation 'org.hibernate:hibernate-core'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
-	compileOnly 'javax.persistence:javax.persistence-api'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor 'org.springframework.boot:spring-boot-starter-validation'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'javax.persistence:javax.persistence-api'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-starter-validation'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 tasks.withType(Test) {
-	testLogging {
-		// set options for log level LIFECYCLE
-		events TestLogEvent.FAILED,
-				TestLogEvent.PASSED,
-				TestLogEvent.SKIPPED
-		// TestLogEvent.STANDARD_OUT
-		exceptionFormat TestExceptionFormat.FULL
-		showExceptions true
-		showCauses true
-		showStackTraces true
+    testLogging {
+        // set options for log level LIFECYCLE
+        events TestLogEvent.FAILED,
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED
+        // TestLogEvent.STANDARD_OUT
+        exceptionFormat TestExceptionFormat.FULL
+        showExceptions true
+        showCauses true
+        showStackTraces true
 
-		// set options for log level DEBUG and INFO
-		debug {
-			events TestLogEvent.STARTED,
-					TestLogEvent.FAILED,
-					TestLogEvent.PASSED,
-					TestLogEvent.SKIPPED,
-					TestLogEvent.STANDARD_ERROR
-			// TestLogEvent.STANDARD_OUT
-			exceptionFormat TestExceptionFormat.FULL
-		}
-		info.events = debug.events
-		info.exceptionFormat = debug.exceptionFormat
+        // set options for log level DEBUG and INFO
+        debug {
+            events TestLogEvent.STARTED,
+                    TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_ERROR
+            // TestLogEvent.STANDARD_OUT
+            exceptionFormat TestExceptionFormat.FULL
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
 
-		afterSuite { desc, result ->
-			if (!desc.parent) { // will match the outermost suite
-				def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
-				def startItem = '|  ', endItem = '  |'
-				def repeatLength = startItem.length() + output.length() + endItem.length()
-				println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
-			}
-		}
-	}
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
 }
 
 tasks {
-	bootWar {
-		archiveFileName.set("mortageplan.war")
-	}
+    bootWar {
+        archiveFileName.set("mortageplan.war")
+    }
 }
 
 task runExecutableWar(type: JavaExec) {
-	dependsOn bootWar
-	group = "Execution"
-	description = "Run the output executable war with provided prospects.txt"
-	classpath = files(bootWar.archiveFile.get())
-	args 'prospects.txt'
+    dependsOn bootWar
+    group = "Execution"
+    description = "Run the output executable war with provided prospects.txt"
+    classpath = files(bootWar.archiveFile.get())
+    args 'prospects.txt'
 }
 
 task runExecutableWarTomcat(type: JavaExec) {
-	dependsOn bootWar
-	group = "Execution"
-	description = "Run the output executable war as a webapp in Tomcat"
-	classpath = files(bootWar.archiveFile.get())
+    dependsOn bootWar
+    group = "Execution"
+    description = "Run the output executable war as a webapp in Tomcat"
+    classpath = files(bootWar.archiveFile.get())
 }
 
 docker {
-	name 'mortageplan'
-	dockerfile file('Dockerfile-gradle')
-	files bootWar.archiveFile.get()
+    name 'mortageplan'
+    dockerfile file('Dockerfile-gradle')
+    files bootWar.archiveFile.get()
 }
 
 dockerRun {
-	name 'mortageplan'
-	image 'mortageplan'
-	ports '8080:8080'
-	daemonize true
-	// command 'sleep', '100'
+    name 'mortageplan'
+    image 'mortageplan'
+    ports '8080:8080'
+    daemonize true
 }
 
-dockerCompose {
-	template 'docker-compose.yml-template'
-	dockerComposeFile 'docker-compose.yml'
-}
+ dockerCompose {
+     template 'docker-compose.yml-template'
+     dockerComposeFile 'docker-compose.yml'
+ }

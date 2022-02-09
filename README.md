@@ -51,3 +51,6 @@ _by Kåre Hampf_
 
 #### Remove local Docker container and image
 * `gradlew dockerRemoveContainer`
+
+### Access already running ECS container on Amazon ECR
+* [http://ec2-16-171-26-166.eu-north-1.compute.amazonaws.com:8080](http://ec2-16-171-26-166.eu-north-1.compute.amazonaws.com:8080)
