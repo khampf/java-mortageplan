@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'com.palantir.docker' version '0.32.0'
 	id 'com.palantir.docker-run' version '0.32.0'
+	id 'com.palantir.docker-compose' version '0.32.0'
 	id 'java'
 	id 'war'
 }
