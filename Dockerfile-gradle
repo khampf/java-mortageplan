@@ -1,4 +1,4 @@
 FROM openjdk:11-slim
-ARG WAR_FILE=./build/libs/mortageplan.war
+ARG WAR_FILE=mortageplan.war
 COPY ${WAR_FILE} /
 ENTRYPOINT ["java","-jar","/mortageplan.war"]

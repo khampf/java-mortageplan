@@ -1,5 +1,0 @@
-FROM openjdk:11-slim
-ARG JAR_FILE=build/libs/*.war
-COPY ${JAR_FILE} /
-ENTRYPOINT ["java","-jar","/mortageplan-0.0.1-SNAPSHOT.war"]
-# docker build --build-arg JAR_FILE=build/libs/\*.war -t springio/gs-spring-boot-docker .
