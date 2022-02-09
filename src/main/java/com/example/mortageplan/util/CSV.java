@@ -3,7 +3,6 @@ package com.example.mortageplan.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,8 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-// TODO remove redundant constructors
 
 /**
  * Class for parsing CSV input to list of string
@@ -59,28 +56,6 @@ public class CSV {
     }
 
     /**
-     * TODO: delete Constructor which parses CSV strings from a string
-     *
-     * @param inputString     Input CSV as string
-     * @param columnDelimiter Column delimiter
-     */
-    public CSV(String inputString, char columnDelimiter) {
-        this.columnDelimiter = columnDelimiter;
-        InputStream inputStream = new ByteArrayInputStream(inputString.getBytes(StandardCharsets.UTF_8));
-        Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8);
-        CSVParse(scanner);
-    }
-
-    /**
-     * TODO: delete Constructor which parses CSV strings from a string using default delimiter
-     *
-     * @param inputString Input CSV as string
-     */
-    public CSV(String inputString) {
-        this(inputString, defaultColumnDelimiter);
-    }
-
-    /**
      * Constructor parsing CSV data from inputStream
      *
      * @param inputStream     Stream of CSV input text
@@ -101,6 +76,11 @@ public class CSV {
         this(inputStream, defaultColumnDelimiter);
     }
 
+    /**
+     * Parses CSV to strings from input data line scanner
+     *
+     * @param scanner Line scanner
+     */
     public void CSVParse(Scanner scanner) {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
