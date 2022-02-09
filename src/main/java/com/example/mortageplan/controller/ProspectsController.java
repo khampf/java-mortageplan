@@ -17,23 +17,16 @@ public class ProspectsController {
     @Autowired
     ProspectService prospectService;
 
-    // private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public String commonContent(Model model, ProspectEntity prospect) {
+    @GetMapping({"/"})
+    public String webpage(Model model, ProspectEntity prospect) {
         List<ProspectEntity> prospects = prospectService.getAllProspects();
         model.addAttribute("prospects", prospects);
         model.addAttribute("prospect", prospect);
         return "index";
     }
 
-    @GetMapping({"/"})
-    public String webpage(Model model, ProspectEntity prospect) {
-        return commonContent(model, prospect);
-    }
-
     @PostMapping("/")
     public String addProspect(@Valid @ModelAttribute("prospect") ProspectEntity prospect, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        // TODO test if bindings result can use commonContent
         if (result.hasErrors()) {
             List<ProspectEntity> prospects = prospectService.getAllProspects();
             model.addAttribute("prospects", prospects);

@@ -4,19 +4,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CSV {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static char defaultDelimiter = ',';
+    private static final char defaultDelimiter = ',';
     private char delimiter = defaultDelimiter;
     List<List<String>> strings = new ArrayList<>();
 
     public CSV(File inputFile, char delimiter) throws FileNotFoundException {
         this.delimiter = delimiter;
-        Scanner scanner = new Scanner(inputFile, "UTF-8");
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(inputFile, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            logger.error("Unable to parse input: " + e.getMessage());
+        }
         CSVParse(scanner);
     }
 
@@ -26,8 +32,8 @@ public class CSV {
 
     public CSV(String inputString, char delimiter) throws UnsupportedEncodingException {
         this.delimiter = delimiter;
-        InputStream inputStream = new ByteArrayInputStream(inputString.getBytes("UTF-8"));
-        Scanner scanner = new Scanner(inputStream, "UTF-8");
+        InputStream inputStream = new ByteArrayInputStream(inputString.getBytes(StandardCharsets.UTF_8));
+        Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8);
         CSVParse(scanner);
     }
 
@@ -37,7 +43,7 @@ public class CSV {
 
     public CSV(InputStream inputStream, char delimiter) {
         this.delimiter = delimiter;
-        Scanner scanner = new Scanner(inputStream, "UTF-8");
+        Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8);
         CSVParse(scanner);
     }
 
