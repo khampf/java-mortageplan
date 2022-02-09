@@ -2,7 +2,6 @@ package com.example.mortageplan.controller;
 
 import com.example.mortageplan.entity.ProspectEntity;
 import com.example.mortageplan.service.ProspectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,8 +13,15 @@ import java.util.List;
 
 @Controller
 public class ProspectsController {
-    @Autowired
+    final
     ProspectService prospectService;
+
+    /**
+     * @param prospectService Prospect entity JPA service
+     */
+    public ProspectsController(ProspectService prospectService) {
+        this.prospectService = prospectService;
+    }
 
     @GetMapping({"/"})
     public String webpage(Model model, ProspectEntity prospect) {
@@ -41,7 +47,7 @@ public class ProspectsController {
         return "redirect:/";
     }
 
-    @RequestMapping(value="/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         prospectService.deleteProspectById(id);
         redirectAttributes.addFlashAttribute("message",
