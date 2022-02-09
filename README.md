@@ -6,7 +6,7 @@ _by Kåre Hampf_
 
 ### Requirements and dependencies
 
-* Java 11
+* JDK 11 (tested with OpenJDK 11)
 
 ### Build and test
 
