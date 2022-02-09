@@ -13,8 +13,7 @@ import java.util.List;
  */
 @Service
 public class ProspectServiceImpl implements ProspectService {
-    final
-    ProspectRepository repository;
+    final ProspectRepository repository;
 
     /**
      * Constructor to avoid @Autowired
