@@ -5,6 +5,7 @@ import com.example.mortageplan.util.NotJavaMath;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ProspectEntity {
     @lombok.Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     @Column
     private int id;
 
@@ -81,7 +83,7 @@ public class ProspectEntity {
     }
 
     /**
-     * Constructor without a name
+     * Constructor without a name overload
      *
      * @param loanTotal      Prospect total sum
      * @param yearlyInterest Annual interest in percents
@@ -104,22 +106,22 @@ public class ProspectEntity {
         }
         this.customerName = strings.get(0);
 
-        try {
-            this.loanTotal = Double.parseDouble(strings.get(1));
-        } catch (NumberFormatException e) {
-            throw new InvalidInputException("Incorrect number format in column 1: " + strings.get(1));
-        }
-
-        try {
-            this.yearlyInterest = Double.parseDouble(strings.get(2));
-        } catch (NumberFormatException e) {
-            throw new InvalidInputException("Incorrect number format in column 2: " + strings.get(2));
-        }
-
-        try {
-            this.termYears = Double.parseDouble(strings.get(3));
-        } catch (NumberFormatException e) {
-            throw new InvalidInputException("Incorrect number format in column 3: " + strings.get(3));
+        for (int i = 1; i < 4; i++) {
+            try {
+                switch (i) {
+                    case 1:
+                        this.loanTotal = Double.parseDouble(strings.get(i));
+                        break;
+                    case 2:
+                        this.yearlyInterest = Double.parseDouble(strings.get(i));
+                        break;
+                    case 3:
+                        this.termYears = Double.parseDouble(strings.get(i));
+                }
+            } catch (NumberFormatException e) {
+                throw new InvalidInputException("Incorrect number format in column "
+                        + (i + 1) + ": " + strings.get(i));
+            }
         }
     }
 
@@ -139,6 +141,15 @@ public class ProspectEntity {
      */
     public double getMonthlyInterest() {
         return yearlyInterest / 12;
+    }
+
+    /**
+     * Convenience function to get decimal interest calculated per month
+     *
+     * @return Monthly interest as percents
+     */
+    public double getMonthlyDecimalInterest() {
+        return getMonthlyInterest() / 100.0;
     }
 
     /**
@@ -168,7 +179,6 @@ public class ProspectEntity {
         this.termYears = paymentMonths / 12;
     }
 
-
     /**
      * Calculates monthly payment
      *
@@ -177,10 +187,10 @@ public class ProspectEntity {
     public double getMonthlyPayment() {
         double termMonths = getTermMonths();
         /*
-         * E = Fixed monthly payment        monthlyPayment
-         * b = Interest on a monthly basis  monthlyInterest
+         * E = Fixed monthly payment        return value
+         * b = Interest on a monthly basis  getMonthlyDecimalInterest()
          * U = Total loan                   loanTotal
-         * p = Number of payments           termMonths
+         * p = Number of payments           getTermMonths()
          *
          * Formula: E = U[b(1 + b)^p]/[(1 + b)^p - 1]
          *
@@ -188,9 +198,11 @@ public class ProspectEntity {
          * E = --------------------- = ----------------------
          *      [ ( 1 + b )^p - 1 ]    ( ( 1 + b )^p - 1 )
          */
-        double decimalMonthlyInterest = getMonthlyInterest() / 100.0;
-        return loanTotal * (decimalMonthlyInterest * NotJavaMath.pow(1 + decimalMonthlyInterest, termMonths))
-                / (NotJavaMath.pow(1 + decimalMonthlyInterest, termMonths) - 1);
+
+        double numerator = loanTotal * (getMonthlyDecimalInterest()
+                * NotJavaMath.pow(1 + getMonthlyDecimalInterest(), termMonths));
+        double denominator = (NotJavaMath.pow(1 + getMonthlyDecimalInterest(), termMonths) - 1);
+        return numerator / denominator;
     }
 
     /**

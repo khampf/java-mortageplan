@@ -1,6 +1,5 @@
-package com.example.mortageplan;
+package com.example.mortageplan.util;
 
-import com.example.mortageplan.util.CSV;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
