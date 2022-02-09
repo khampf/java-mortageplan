@@ -16,7 +16,7 @@ _by Kåre Hampf_
 
 #### As console application with assigned input
 
-* `gradlew runExececutableWar`
+* `gradlew runExecutableWar`
 * or
     * Unix: `java -jar build/libs/mortageplan.war prospects.txt`
     * Windows: `java -jar .\build\libs\mortageplan.war .\prospects.txt`
