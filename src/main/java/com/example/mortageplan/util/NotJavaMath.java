@@ -1,27 +1,47 @@
 package com.example.mortageplan.util;
 
-import java.util.InputMismatchException;
-
+/**
+ * Utility class to avoid using math library
+ */
 public class NotJavaMath {
-    public static double pow(double number, double power) {
-        if (power < 0) {
-            throw new InputMismatchException("Can not handle inversions");
-        } else if (power == 0) {
-            return 1;
-        } else if (power == 1) {
-            return number;
-        } else {
-            return number * pow(number, power-1);
+    /**
+     * Exponentiation
+     *
+     * @param base     Base number
+     * @param exponent Exponent
+     * @return Result of base^exponent
+     */
+    public static double pow(double base, double exponent) {
+        if (exponent < 0) {
+            return 1 / pow(base, -exponent);
         }
+        double result = 1;
+        while (exponent-- > 0) {
+            result *= base;
+        }
+        return result;
     }
 
+    /**
+     * Round a decimal number to the nearest integer
+     *
+     * @param number Decimal to round up/down
+     * @return Rounded number
+     */
     public static double round(double number) {
         int integer = (int) number;
         double fraction = number - integer;
-        return (fraction > 0.5 ? integer+1 : integer);
+        return (fraction > 0.5 ? integer + 1 : integer);
     }
 
+    /**
+     * Round a decimal number to the nearest number with specified number of decimals
+     *
+     * @param number   Decimal number to round up/down
+     * @param decimals Number of decimals in answer
+     * @return Rounded number
+     */
     public static double round(double number, int decimals) {
-        return round((number * pow(10,decimals))) / pow(10,decimals);
+        return round((number * pow(10, decimals))) / pow(10, decimals);
     }
 }

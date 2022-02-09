@@ -90,4 +90,40 @@ class ProspectEntityTest {
         p.setTermMonths(18);
         assertEquals("Donald Duck wants to borrow 100.0 € for a period of 1.5 years and pay 6.01 € each month", p.toString());
     }
+
+    @Test
+    void getYearlyDecimalInterest() {
+    }
+
+    @Test
+    void getTermMonths() {
+    }
+
+    @Test
+    void setTermMonths() {
+    }
+
+    @Test
+    void testToString1() {
+    }
+
+    @Test
+    void getId() {
+    }
+
+    @Test
+    void getCustomerName() {
+    }
+
+    @Test
+    void getTermYears() {
+    }
+
+    @Test
+    void setCustomerName() {
+    }
+
+    @Test
+    void setTermYears() {
+    }
 }

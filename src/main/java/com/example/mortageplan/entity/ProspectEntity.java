@@ -1,38 +1,78 @@
 package com.example.mortageplan.entity;
 
 import com.example.mortageplan.util.NotJavaMath;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
+/**
+ * Prospect JPA entity
+ */
 @Entity
 @Table
 public class ProspectEntity {
+    /**
+     * JPA entity id
+     */
+    @lombok.Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private int id;
 
+    /**
+     * Customer name
+     */
+    @lombok.Setter
+    @lombok.Getter
     @Column
     @NotBlank // (message = "Can not be blank")
     private String customerName;
 
+    /**
+     * Sum total of prospect
+     */
+    @lombok.Setter
+    @lombok.Getter
     @Column
     @Min(value = 1) //, message = "Required")
     private double loanTotal;
 
+    /**
+     * Prospect interest in annual percent
+     */
+    @lombok.Setter
+    @lombok.Getter
     @Column
     @Min(value = 0)
     private double yearlyInterest;
 
+    /**
+     * Prospect duration in decimal years
+     */
+    @lombok.Setter
+    @lombok.Getter
     @Column
     @Positive
     private double termYears;
 
+    /**
+     * Public no-arg constructor for JPA
+     */
     public ProspectEntity() {
-
     }
 
+    /**
+     * Constructor using arguments
+     *
+     * @param customerName   Customer name
+     * @param loanTotal      Prospect total sum
+     * @param yearlyInterest Annual interest in percents
+     * @param termYears      Prospect terms in years
+     */
     public ProspectEntity(String customerName, double loanTotal, double yearlyInterest, double termYears) {
         this.customerName = customerName;
         this.loanTotal = loanTotal;
@@ -40,10 +80,23 @@ public class ProspectEntity {
         this.termYears = termYears;
     }
 
+    /**
+     * Constructor without a name
+     *
+     * @param loanTotal      Prospect total sum
+     * @param yearlyInterest Annual interest in percents
+     * @param termYears      Prospect terms in years
+     */
     public ProspectEntity(double loanTotal, double yearlyInterest, double termYears) {
-        this("Unkown", loanTotal, yearlyInterest, termYears);
+        this("Unknown", loanTotal, yearlyInterest, termYears);
     }
 
+    /**
+     * Constructor parsing values as list of 4 strings used after having parsed CSV input
+     *
+     * @param strings Input as list of strings
+     * @throws InvalidInputException on bad input
+     */
     public ProspectEntity(List<String> strings) throws InvalidInputException {
         // [Customer, Total loan, Interest, Years]
         if (strings.size() != 4) {
@@ -70,86 +123,85 @@ public class ProspectEntity {
         }
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public double getLoanTotal() {
-        return loanTotal;
-    }
-
-    public void setLoanTotal(double loanTotal) {
-        this.loanTotal = loanTotal;
-    }
-
-    public double getYearlyInterest() {
-        return yearlyInterest;
-    }
-
+    /**
+     * Convenience function to get annual interest as a decimal number
+     *
+     * @return Annual interest as decimal number
+     */
     public double getYearlyDecimalInterest() {
         return yearlyInterest / 100.0;
     }
 
+    /**
+     * Convenience function to get interest calculated per monthly percents
+     *
+     * @return Monthly interest as percents
+     */
     public double getMonthlyInterest() {
         return yearlyInterest / 12;
     }
 
-    public void setYearlyInterest(double yearlyInterest) {
-        this.yearlyInterest = yearlyInterest;
-    }
-
+    /**
+     * Convenience function to set annual interest providing monthly interest
+     *
+     * @param monthlyInterest Monthly interest in percents
+     */
     public void setMonthlyInterest(double monthlyInterest) {
         this.yearlyInterest = monthlyInterest * 12;
     }
 
-    public double getTermYears() {
-        return termYears;
-    }
-
+    /**
+     * Convenience function to get prospect terms in number of months
+     *
+     * @return Prospect terms in months
+     */
     public double getTermMonths() {
         return termYears * 12;
     }
 
-    public void setTermYears(double paymentYears) {
-        this.termYears = paymentYears;
-    }
+    /**
+     * Convenience function to set prospect term in number of months
+     *
+     * @param paymentMonths Prospect term in months
+     */
     public void setTermMonths(double paymentMonths) {
         this.termYears = paymentMonths / 12;
     }
 
-    /**********************************************************************
-     * E = Fixed monthly payment        monthlyPayment
-     * b = Interest on a monthly basis  monthlyInterest
-     * U = Total loan                   loanTotal
-     * p = Number of payments           termMonths
-     * Formula: E = U[b(1 + b)^p]/[(1 + b)^p - 1]
-     *
-     *       U[ b * ( 1 + b )^p ]   U * (b * ( 1 + b )^p )
-     *  E = --------------------- = ----------------------
-     *       [ ( 1 + b )^p - 1 ]    ( ( 1 + b )^p - 1 )
-     **********************************************************************/
 
+    /**
+     * Calculates monthly payment
+     *
+     * @return Payment per month
+     */
     public double getMonthlyPayment() {
         double termMonths = getTermMonths();
+        /*
+         * E = Fixed monthly payment        monthlyPayment
+         * b = Interest on a monthly basis  monthlyInterest
+         * U = Total loan                   loanTotal
+         * p = Number of payments           termMonths
+         *
+         * Formula: E = U[b(1 + b)^p]/[(1 + b)^p - 1]
+         *
+         *      U[ b * ( 1 + b )^p ]   U * (b * ( 1 + b )^p )
+         * E = --------------------- = ----------------------
+         *      [ ( 1 + b )^p - 1 ]    ( ( 1 + b )^p - 1 )
+         */
         double decimalMonthlyInterest = getMonthlyInterest() / 100.0;
         return loanTotal * (decimalMonthlyInterest * NotJavaMath.pow(1 + decimalMonthlyInterest, termMonths))
                 / (NotJavaMath.pow(1 + decimalMonthlyInterest, termMonths) - 1);
     }
 
+    /**
+     * @return String representation of entity
+     */
     @Override
     public String toString() {
         double termMonths = getTermMonths();
         String paymentYearsString =
                 (termMonths % 12 == 0 ? Integer.toString((int) getTermYears()) : Double.toString(getTermYears()));
         return customerName + " wants to borrow " + loanTotal + " € for a period of " + paymentYearsString
-                + " years and pay " + NotJavaMath.round(getMonthlyPayment(),2) +  " € each month";
+                + " years and pay " + NotJavaMath.round(getMonthlyPayment(), 2) + " € each month";
     }
 }
