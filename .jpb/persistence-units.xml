@@ -5,6 +5,7 @@
       <persistence-unit name="Default">
         <packages>
           <package value="com.example.mortageplan" />
+          <package value="" />
         </packages>
       </persistence-unit>
     </persistence-units>

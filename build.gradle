@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.2-FINAL'
+version = '0.0.3-RC'
 sourceCompatibility = '11'
 
 configurations {

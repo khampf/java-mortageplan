@@ -84,3 +84,4 @@ BUILD SUCCESSFUL in 1s
 
 ### Access deployed ECS Docker container on Amazon ECR
 * [http://ec2-13-51-13-216.eu-north-1.compute.amazonaws.com:8080](http://ec2-13-51-13-216.eu-north-1.compute.amazonaws.com:8080)
+* NOTE: THIS URL WILL CHANGE! 

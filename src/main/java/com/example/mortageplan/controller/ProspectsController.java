@@ -48,13 +48,14 @@ public class ProspectsController {
     public String addProspect(@Valid @ModelAttribute("prospect") ProspectEntity prospect, BindingResult result,
                               Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
+            model.addAttribute("prospects", prospectService.getAllProspects());
             model.addAttribute("message",
                     "Unable to add prospect using form input data");
-        } else {
-            redirectAttributes.addFlashAttribute("message",
-                    "Prospect added");
-            prospectService.saveOrUpdateProspect(prospect);
+            return "index";
         }
+        redirectAttributes.addFlashAttribute("message",
+                "Prospect added");
+        prospectService.saveOrUpdateProspect(prospect);
         redirectAttributes.addFlashAttribute("prospect", new ProspectEntity());
         redirectAttributes.addFlashAttribute("prospects", prospectService.getAllProspects());
         return "redirect:/";
