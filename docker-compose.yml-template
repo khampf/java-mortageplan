@@ -1,2 +1,0 @@
-myservice:
-  image: 'testrepository/mortageplan:latest'

@@ -11,9 +11,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.List;
 
 @EnableJpaRepositories
@@ -53,6 +51,11 @@ public class MortagePlanApplication extends SpringBootServletInitializer {
      * @param fileName Filename
      */
     public static void consoleOutputFromFile(String fileName) {
+        try {
+            System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            logger.warn("VM does not support mandatory encoding UTF-8");
+        }
         File inputFile = new File(fileName);
         try {
             CSV csv = new CSV(new FileInputStream(inputFile));
