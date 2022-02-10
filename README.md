@@ -53,7 +53,7 @@ BUILD SUCCESSFUL in 1s
 ```
 #### As SpringBoot Web App using built in Tomcat
 
-* `gradlew runExececutableWarTomcat`
+* `gradlew runExecutableWarTomcat`
 * or (same as previous but without arguments)
   * Unix: `java -jar build/libs/mortageplan.war`
   * Windows: `java -jar .\build\libs\mortageplan.war`
