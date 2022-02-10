@@ -2,6 +2,7 @@ package com.example.mortageplan.service;
 
 import com.example.mortageplan.entity.ProspectEntity;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public interface ProspectService {
      * @param id Prospect entity id
      * @return Prospect entity
      */
-    ProspectEntity getProspectById(int id);
+    ProspectEntity getProspectById(int id) throws EntityNotFoundException;
 
     /**
      * Get prospect entities as list
@@ -36,5 +37,5 @@ public interface ProspectService {
      *
      * @param id Entity id
      */
-    void deleteProspectById(int id);
+    void deleteProspectById(int id) throws EntityNotFoundException;
 }

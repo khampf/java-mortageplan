@@ -30,7 +30,7 @@ public class ProspectServiceImpl implements ProspectService {
      * @param id Prospect entity id
      * @return Prospect entity
      */
-    public ProspectEntity getProspectById(int id) {
+    public ProspectEntity getProspectById(int id) throws EntityNotFoundException {
         if (repository.findById(id).isEmpty()) {
             throw new EntityNotFoundException("Entity not present");
         }
@@ -62,7 +62,10 @@ public class ProspectServiceImpl implements ProspectService {
      *
      * @param id Entity id
      */
-    public void deleteProspectById(int id) {
+    public void deleteProspectById(int id) throws EntityNotFoundException {
+        if (repository.findById(id).isEmpty()) {
+            throw new EntityNotFoundException("Entity not present");
+        }
         repository.deleteById(id);
     }
 }

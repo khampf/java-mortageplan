@@ -47,7 +47,7 @@
     </table>
 </div>
 
-<div>
+<div th:unless="${prospect == null}">
     <form th:action="@{/}" th:object="${prospect}" method="post">
         <fieldset>
             <legend>Enter new prospect</legend>
