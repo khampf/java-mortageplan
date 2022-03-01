@@ -82,5 +82,6 @@ BUILD SUCCESSFUL in 1s
 #### Remove local Docker container and image
 * `gradlew dockerRemoveContainer`
 
-### Access deployed ECS Docker container on Amazon ECR
-* [http://ec2-13-48-10-246.eu-north-1.compute.amazonaws.com:8080/](http://ec2-13-48-10-246.eu-north-1.compute.amazonaws.com:8080/)
+### ~~Access deployed ECS Docker container on Amazon ECR~~
+**(depreceated to save on resources)**
+* ~~[http://ec2-13-48-10-246.eu-north-1.compute.amazonaws.com:8080/](http://ec2-13-48-10-246.eu-north-1.compute.amazonaws.com:8080/)~~
